@@ -76,6 +76,7 @@
  (keyword_delimited)
  (keyword_replication)
  (keyword_auto_increment)
+ (keyword_identity)
  (keyword_default)
  (keyword_collate)
  (keyword_concurrently)

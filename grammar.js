@@ -38,6 +38,7 @@ export default grammar({
     [$.all_fields],
     [$.values],
     [$._expression, $.window_function],
+    [$.constraints],
   ],
 
   precedences: $ => [
