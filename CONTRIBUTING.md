@@ -34,4 +34,5 @@ BREAKING CHANGE: The `predicate` node has been replaced with `binary_expression`
 ## Releases
 
 Pushing a version tag creates a [draft GitHub release](https://github.com/Goldziher/tree-sitter-sql/releases) with an archive
-of the generated parser sources and bindings. Update the version fields in the package and build manifests before tagging.
+of the generated parser sources and bindings. Update the version fields in the package manifests,
+`CMakeLists.txt`, and `Makefile` before tagging.
