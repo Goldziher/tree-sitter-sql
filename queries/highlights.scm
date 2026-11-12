@@ -349,6 +349,7 @@
   (keyword_execute)
   (keyword_procedure)
   (keyword_copy)
+  (keyword_clone)
   (keyword_delimiter)
   (keyword_encoding)
   (keyword_escape)
