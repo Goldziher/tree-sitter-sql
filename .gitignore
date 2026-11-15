@@ -8,8 +8,6 @@ build
 *.log
 /test.js
 /examples/npm
-package-lock.json
-/target/
 /.build/
 /src/tree_sitter/
 /src/parser.c

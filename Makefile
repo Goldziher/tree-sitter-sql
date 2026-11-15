@@ -1,5 +1,6 @@
 LANGUAGE_NAME := tree-sitter-sql
-HOMEPAGE_URL := git+https://github.com/derekstride/tree-sitter-sql.git
+DESCRIPTION := Permissive SQL grammar for Tree-sitter
+HOMEPAGE_URL := git+https://github.com/Goldziher/tree-sitter-sql.git
 VERSION := 0.3.11
 
 # repository

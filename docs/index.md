@@ -4,11 +4,9 @@ layout: default
 
 # tree-sitter-sql
 
-The SQL grammar is defined at @ [github://derekstride/tree-sitter-sql](https://github.com/DerekStride/tree-sitter-sql).
-You can view the latest parser artifacts on site or on the [gh-pages
-branch](https://github.com/DerekStride/tree-sitter-sql/tree/gh-pages/src).
-
-Find previous artifacts in the [history on GitHub](https://github.com/DerekStride/tree-sitter-sql/commits/gh-pages).
+Goldziher maintains this SQL grammar in [tree-sitter-sql](https://github.com/Goldziher/tree-sitter-sql).
+Browse the generated parser sources on the [gh-pages branch](https://github.com/Goldziher/tree-sitter-sql/tree/gh-pages/src).
+The [branch history](https://github.com/Goldziher/tree-sitter-sql/commits/gh-pages) contains older artifacts.
 
 The artifacts can also be found here:
 
