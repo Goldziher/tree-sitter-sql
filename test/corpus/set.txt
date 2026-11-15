@@ -64,6 +64,43 @@ SET standard_conforming_strings TO DEFAULT;
       (keyword_default))))
 
 ================================================================================
+Set statement with a list of values
+================================================================================
+
+SET search_path TO app, public;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (set_statement
+      (keyword_set)
+      (object_reference
+        (identifier))
+      (keyword_to)
+      (identifier)
+      (identifier))))
+
+================================================================================
+Set local statement with a list of values
+================================================================================
+
+SET LOCAL search_path = 'app', public, pg_temp;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (set_statement
+      (keyword_set)
+      (keyword_local)
+      (object_reference
+        (identifier))
+      (literal)
+      (identifier)
+      (identifier))))
+
+================================================================================
 Reset statement
 ================================================================================
 
@@ -91,3 +128,68 @@ RESET ALL;
     (reset_statement
       (keyword_reset)
       (keyword_all))))
+
+================================================================================
+SQLite pragma
+================================================================================
+
+PRAGMA journal_mode;
+PRAGMA journal_mode = WAL;
+PRAGMA journal_mode=DELETE;
+PRAGMA foreign_keys = ON;
+PRAGMA cache_size = -2000;
+PRAGMA main.synchronous = NORMAL;
+PRAGMA table_info(jobs);
+PRAGMA encoding = 'UTF-8';
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (pragma_statement
+      (keyword_pragma)
+      (object_reference
+        (identifier))))
+  (statement
+    (pragma_statement
+      (keyword_pragma)
+      (object_reference
+        (identifier))
+      (identifier)))
+  (statement
+    (pragma_statement
+      (keyword_pragma)
+      (object_reference
+        (identifier))
+      (identifier)))
+  (statement
+    (pragma_statement
+      (keyword_pragma)
+      (object_reference
+        (identifier))
+      (keyword_on)))
+  (statement
+    (pragma_statement
+      (keyword_pragma)
+      (object_reference
+        (identifier))
+      (literal)))
+  (statement
+    (pragma_statement
+      (keyword_pragma)
+      (object_reference
+        (identifier)
+        (identifier))
+      (identifier)))
+  (statement
+    (pragma_statement
+      (keyword_pragma)
+      (object_reference
+        (identifier))
+      (identifier)))
+  (statement
+    (pragma_statement
+      (keyword_pragma)
+      (object_reference
+        (identifier))
+      (literal))))
