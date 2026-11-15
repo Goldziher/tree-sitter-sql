@@ -21,6 +21,17 @@ Generated C sources are available on the [`gh-pages` branch](https://github.com/
 
 The [npm package](https://www.npmjs.com/package/@derekstride/tree-sitter-sql), [Rust crate](https://crates.io/crates/tree-sitter-sequel), and [Python package](https://pypi.org/project/tree-sitter-sql/) are upstream distributions. Build from this repository to use the fork's changes.
 
+## Build for WebAssembly
+
+Generate and compact the parser before compiling it. The compaction step uses Python 3.10+
+and stores most parse states in Tree-sitter's sparse format.
+
+```sh
+npx --yes --package=tree-sitter-cli@0.27.1 -- tree-sitter generate --abi 14
+python3 scripts/compact-parser.py src/parser.c
+npx --yes --package=tree-sitter-cli@0.27.1 -- tree-sitter build --wasm
+```
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the test commands. For parser bugs, [open an issue](https://github.com/Goldziher/tree-sitter-sql/issues/new) with a minimal SQL example and the expected result.

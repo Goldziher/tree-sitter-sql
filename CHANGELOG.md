@@ -20,6 +20,7 @@ This file records notable changes to the Goldziher fork, followed by the inherit
 
 ### Changed
 
+* Compact generated parse tables for WebAssembly builds.
 * Updated fork documentation and package metadata, added a fork copyright notice under the existing MIT license, and removed upstream registry publishing automation.
 
 See the [initial fork changes](https://github.com/Goldziher/tree-sitter-sql/pull/1), [fork cleanup](https://github.com/Goldziher/tree-sitter-sql/pull/2), and [upstream ports](https://github.com/Goldziher/tree-sitter-sql/pull/3) for details and attribution.
