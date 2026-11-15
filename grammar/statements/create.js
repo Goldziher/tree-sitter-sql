@@ -34,6 +34,7 @@ export default {
   create_table: $ => prec.left(
     seq(
       $.keyword_create,
+      optional($._or_replace),
       optional(
         choice(
           $._temporary,
@@ -61,6 +62,10 @@ export default {
             $.keyword_as,
             $.create_query,
           ),
+        ),
+        seq(
+          $.keyword_clone,
+          $.object_reference,
         ),
       ),
     ),
@@ -367,12 +372,18 @@ export default {
 
   create_schema: $ => prec.left(seq(
     $.keyword_create,
+    optional($._or_replace),
     $.keyword_schema,
     choice(
       seq(
         optional($._if_not_exists),
         $.identifier,
-        optional(seq($.keyword_authorization, $.identifier)),
+        optional(
+          choice(
+            seq($.keyword_clone, $.object_reference),
+            seq($.keyword_authorization, $.identifier),
+          ),
+        ),
       ),
       seq(
         $.keyword_authorization,
@@ -389,9 +400,11 @@ export default {
 
   create_database: $ => prec.left(seq(
     $.keyword_create,
+    optional($._or_replace),
     $.keyword_database,
     optional($._if_not_exists),
     $.identifier,
+    optional(seq($.keyword_clone, $.identifier)),
     optional($.keyword_with),
     repeat(
       $._with_settings

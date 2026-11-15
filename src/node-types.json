@@ -1802,7 +1802,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "array",
@@ -3767,6 +3767,16 @@
           }
         ]
       },
+      "increment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -3775,6 +3785,16 @@
             "type": "identifier",
             "named": true
           },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "seed": {
+        "multiple": true,
+        "required": false,
+        "types": [
           {
             "type": "literal",
             "named": true
@@ -4101,6 +4121,10 @@
           "named": true
         },
         {
+          "type": "keyword_identity",
+          "named": true
+        },
+        {
           "type": "keyword_key",
           "named": true
         },
@@ -4388,7 +4412,7 @@
     "named": true,
     "fields": {
       "name": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -4661,6 +4685,10 @@
           "named": true
         },
         {
+          "type": "keyword_clone",
+          "named": true
+        },
+        {
           "type": "keyword_create",
           "named": true
         },
@@ -4678,6 +4706,14 @@
         },
         {
           "type": "keyword_not",
+          "named": true
+        },
+        {
+          "type": "keyword_or",
+          "named": true
+        },
+        {
+          "type": "keyword_replace",
           "named": true
         },
         {
@@ -5754,6 +5790,10 @@
           "named": true
         },
         {
+          "type": "keyword_clone",
+          "named": true
+        },
+        {
           "type": "keyword_create",
           "named": true
         },
@@ -5770,7 +5810,19 @@
           "named": true
         },
         {
+          "type": "keyword_or",
+          "named": true
+        },
+        {
+          "type": "keyword_replace",
+          "named": true
+        },
+        {
           "type": "keyword_schema",
+          "named": true
+        },
+        {
+          "type": "object_reference",
           "named": true
         }
       ]
@@ -6153,6 +6205,10 @@
           "named": true
         },
         {
+          "type": "keyword_clone",
+          "named": true
+        },
+        {
           "type": "keyword_create",
           "named": true
         },
@@ -6178,6 +6234,14 @@
         },
         {
           "type": "keyword_oids",
+          "named": true
+        },
+        {
+          "type": "keyword_or",
+          "named": true
+        },
+        {
+          "type": "keyword_replace",
           "named": true
         },
         {
@@ -9744,6 +9808,10 @@
           "named": true
         },
         {
+          "type": "keyword_in",
+          "named": true
+        },
+        {
           "type": "keyword_separator",
           "named": true
         },
@@ -9753,6 +9821,10 @@
         },
         {
           "type": "literal",
+          "named": true
+        },
+        {
+          "type": "null_treatment",
           "named": true
         },
         {
@@ -9793,6 +9865,92 @@
     "type": "join",
     "named": true,
     "fields": {
+      "match_condition": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "between_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "case",
+            "named": true
+          },
+          {
+            "type": "cast",
+            "named": true
+          },
+          {
+            "type": "exists",
+            "named": true
+          },
+          {
+            "type": "field",
+            "named": true
+          },
+          {
+            "type": "interval",
+            "named": true
+          },
+          {
+            "type": "invocation",
+            "named": true
+          },
+          {
+            "type": "list",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "object_id",
+            "named": true
+          },
+          {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
+            "type": "parameter",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
+            "named": true
+          },
+          {
+            "type": "subquery",
+            "named": true
+          },
+          {
+            "type": "subscript",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "window_function",
+            "named": true
+          }
+        ]
+      },
       "predicate": {
         "multiple": false,
         "required": false,
@@ -9893,6 +10051,10 @@
           "named": true
         },
         {
+          "type": "keyword_asof",
+          "named": true
+        },
+        {
           "type": "keyword_full",
           "named": true
         },
@@ -9906,6 +10068,10 @@
         },
         {
           "type": "keyword_left",
+          "named": true
+        },
+        {
+          "type": "keyword_match_condition",
           "named": true
         },
         {
@@ -10229,7 +10395,47 @@
       "required": true,
       "types": [
         {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "between_expression",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "case",
+          "named": true
+        },
+        {
+          "type": "cast",
+          "named": true
+        },
+        {
+          "type": "exists",
+          "named": true
+        },
+        {
+          "type": "field",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "invocation",
+          "named": true
+        },
+        {
           "type": "keyword_limit",
+          "named": true
+        },
+        {
+          "type": "list",
           "named": true
         },
         {
@@ -10237,7 +10443,43 @@
           "named": true
         },
         {
+          "type": "object_id",
+          "named": true
+        },
+        {
           "type": "offset",
+          "named": true
+        },
+        {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
+          "type": "parameter",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
+          "named": true
+        },
+        {
+          "type": "subquery",
+          "named": true
+        },
+        {
+          "type": "subscript",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "window_function",
           "named": true
         }
       ]
@@ -10828,11 +11070,87 @@
       "required": true,
       "types": [
         {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "between_expression",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "case",
+          "named": true
+        },
+        {
+          "type": "cast",
+          "named": true
+        },
+        {
+          "type": "exists",
+          "named": true
+        },
+        {
+          "type": "field",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "invocation",
+          "named": true
+        },
+        {
           "type": "keyword_offset",
           "named": true
         },
         {
+          "type": "list",
+          "named": true
+        },
+        {
           "type": "literal",
+          "named": true
+        },
+        {
+          "type": "object_id",
+          "named": true
+        },
+        {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
+          "type": "parameter",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
+          "named": true
+        },
+        {
+          "type": "subquery",
+          "named": true
+        },
+        {
+          "type": "subscript",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "window_function",
           "named": true
         }
       ]
@@ -15969,6 +16287,10 @@
     "named": true
   },
   {
+    "type": "keyword_asof",
+    "named": true
+  },
+  {
     "type": "keyword_atomic",
     "named": true
   },
@@ -16074,6 +16396,10 @@
   },
   {
     "type": "keyword_check",
+    "named": true
+  },
+  {
+    "type": "keyword_clone",
     "named": true
   },
   {
@@ -16461,6 +16787,10 @@
     "named": true
   },
   {
+    "type": "keyword_identity",
+    "named": true
+  },
+  {
     "type": "keyword_if",
     "named": true
   },
@@ -16634,6 +16964,10 @@
   },
   {
     "type": "keyword_match",
+    "named": true
+  },
+  {
+    "type": "keyword_match_condition",
     "named": true
   },
   {

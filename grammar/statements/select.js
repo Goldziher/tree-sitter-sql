@@ -222,7 +222,7 @@ export default {
     ),
   ),
 
-  window_function: $ => seq(
+  window_function: $ => prec(1, seq(
       choice(
           $.invocation,
           $.ordered_set_aggregate,
@@ -232,7 +232,7 @@ export default {
           $.identifier,
           $.window_specification,
       ),
-  ),
+  )),
 
   ordered_set_aggregate: $ => seq(
     $.invocation,
@@ -262,18 +262,17 @@ export default {
       $.keyword_only,
     ),
     $.relation,
-    repeat(
-      seq(
-        ',',
-        choice(
-          $.relation,
-          alias($._lateral_relation, $.relation),
-        ),
-      ),
-    ),
     optional($.index_hint),
     repeat(
       choice(
+        seq(
+          ',',
+          choice(
+            $.relation,
+            alias($._lateral_relation, $.relation),
+          ),
+          optional($.index_hint),
+        ),
         $.join,
         $.cross_join,
         $.lateral_join,
@@ -408,22 +407,42 @@ export default {
       $.relation,
       optional($.index_hint),
     ),
+    // Snowflake, DuckDB
+    prec.right(seq(
+      $._asof_join,
+      $.relation,
+      optional(
+        seq(
+          $.keyword_match_condition,
+          wrapped_in_parenthesis(field("match_condition", $._expression)),
+        ),
+      ),
+      optional($._join_condition),
+    )),
     seq(
       optional(join_type($)),
       $.keyword_join,
       $.relation,
       optional($.index_hint),
       optional($.join),
-      choice(
-        seq(
-          $.keyword_on,
-          field("predicate", $._expression),
-        ),
-        seq(
-          $.keyword_using,
-          alias($._column_list, $.list),
-        ),
-      ),
+      $._join_condition,
+    ),
+  ),
+
+  _asof_join: $ => seq(
+    $.keyword_asof,
+    optional($.keyword_left),
+    $.keyword_join,
+  ),
+
+  _join_condition: $ => choice(
+    seq(
+      $.keyword_on,
+      field("predicate", $._expression),
+    ),
+    seq(
+      $.keyword_using,
+      alias($._column_list, $.list),
     ),
   ),
 
@@ -573,13 +592,13 @@ export default {
 
   limit: $ => seq(
     $.keyword_limit,
-    $.literal,
+    $._expression,
     optional($.offset),
   ),
 
   offset: $ => seq(
     $.keyword_offset,
-    $.literal,
+    $._expression,
   ),
 
   returning: $ => seq(
