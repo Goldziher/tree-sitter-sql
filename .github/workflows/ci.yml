@@ -39,6 +39,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/test-compact-parser.py
+      - run: npm run build:wasm
+      - name: Check compact SQL parser fits the language-pack cutoff
+        run: test "$(wc -c < src/parser.c)" -le "$((48 * 1024 * 1024))"
       - run: |
           STATUS=0
           if [[ $(grep -rn --exclude=errors.txt ERROR test/ | wc -l) -gt 0 ]]; then

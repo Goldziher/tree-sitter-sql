@@ -96,6 +96,8 @@ def shift_sparse_offsets(body: str, mapping: str, dense_count: int, state_count:
     if position != len(mapping) or offsets != [int(row[1]) for row in SPARSE_ROW_START.finditer(body)]:
         raise ValueError("generated sparse table and offset map disagree")
     shifted_body = SPARSE_ROW_START.sub(lambda row: f"  [{int(row[1]) + shift}] = {row[2]},\n", body)
+    if "[" in SPARSE_ROW_START.sub("", body):
+        raise ValueError("unexpected sparse initializer")
     return shifted_body, "".join(shifted_map)
 
 

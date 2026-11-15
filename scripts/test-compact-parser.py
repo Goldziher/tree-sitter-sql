@@ -90,6 +90,7 @@ static const uint32_t ts_small_parse_table_map[] = {
         cases = (
             ("[sym_c] = STATE(8)", "[sym_c] = UNRECOGNIZED(8)", "unexpected entry in dense state 2000"),
             ("[SMALL_STATE(2002)] = 4", "[SMALL_STATE(2002)] = 3", "sparse table and offset map disagree"),
+            ("      sym_a,\n  [4]", "      [3] = sym_a,\n  [4]", "unexpected sparse initializer"),
         )
         for original, replacement, diagnostic in cases:
             with self.subTest(replacement=replacement):
