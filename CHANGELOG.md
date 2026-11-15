@@ -1,6 +1,28 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+This file records notable changes to the Goldziher fork, followed by the inherited upstream release history.
+
+## Unreleased
+
+### Added
+
+* Support `psql` meta-commands, SQLite `PRAGMA` and conflict clauses, and SQLite-style `?1` and `:name` parameters.
+* Support `ASOF JOIN`, comma-separated relations after a join, and `LATERAL` values with column aliases.
+* Support `POSITION(x IN y)`, bracket array literals, dot steps after colon paths, and `IGNORE` or `RESPECT NULLS` inside function calls.
+* Support `OR REPLACE` and `CLONE` in `CREATE DATABASE`, `CREATE SCHEMA`, and `CREATE TABLE`.
+* Support SQL Server `IDENTITY`, named `UNIQUE` and `FOREIGN KEY` constraints, and trailing commas in table definitions.
+
+### Fixed
+
+* Accept lists in `SET`, conflict targets in `ON CONFLICT`, column lists in `UPDATE ... SET`, `DELETE ... USING`, and expressions after `LIMIT` and `OFFSET`.
+* Keep closing dollar-quote delimiters out of identifiers.
+* Generate parser headers before parallel C compilation and produce usable pkg-config metadata with the correct version.
+
+### Changed
+
+* Updated fork documentation and package metadata, added a fork copyright notice under the existing MIT license, and removed upstream registry publishing automation.
+
+See the [initial fork changes](https://github.com/Goldziher/tree-sitter-sql/pull/1), [fork cleanup](https://github.com/Goldziher/tree-sitter-sql/pull/2), and [upstream ports](https://github.com/Goldziher/tree-sitter-sql/pull/3) for details and attribution.
 
 ## [0.3.13](https://github.com/DerekStride/tree-sitter-sql/compare/v0.3.12...v0.3.13) (2026-11-10)
 

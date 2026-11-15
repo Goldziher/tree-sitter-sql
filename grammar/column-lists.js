@@ -19,6 +19,7 @@ export default {
     '(',
     comma_list($.column_definition, true),
     optional($.constraints),
+    optional(','),
     ')',
   ),
 
@@ -64,6 +65,14 @@ export default {
     seq($.keyword_on, $.keyword_update, $._current_timestamp),
     $._primary_key,
     $.keyword_auto_increment,
+    seq(
+      $.keyword_identity,
+      optional(wrapped_in_parenthesis(seq(
+        field('seed', $.literal),
+        ',',
+        field('increment', $.literal),
+      ))),
+    ),
     $.direction,
     $._column_comment,
     $._check_constraint,
@@ -136,7 +145,8 @@ export default {
       ),
       seq(
         $._check_constraint
-      )
+      ),
+      $._key_constraint,
     )
   ),
 

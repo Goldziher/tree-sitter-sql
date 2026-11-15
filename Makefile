@@ -1,7 +1,7 @@
 LANGUAGE_NAME := tree-sitter-sql
 DESCRIPTION := Permissive SQL grammar for Tree-sitter
 HOMEPAGE_URL := git+https://github.com/Goldziher/tree-sitter-sql.git
-VERSION := 0.3.11
+VERSION := 0.3.13
 
 # repository
 SRC_DIR := src
@@ -73,11 +73,13 @@ $(LANGUAGE_NAME).pc: bindings/c/$(LANGUAGE_NAME).pc.in
 		-e 's|@PROJECT_HOMEPAGE_URL@|$(HOMEPAGE_URL)|' \
 		-e 's|@CMAKE_INSTALL_PREFIX@|$(PREFIX)|' $< > $@
 
-$(SRC_DIR)/grammar.json: $(shell find grammar* -name '*.js')
-	$(TS) generate --no-parser $^
+$(SRC_DIR)/grammar.json: grammar.js $(shell find grammar -name '*.js')
+	$(TS) generate --no-parser $<
 
 $(PARSER): $(SRC_DIR)/grammar.json
 	$(TS) generate $^
+
+$(OBJS): | $(PARSER)
 
 install: all
 	install -d '$(DESTDIR)$(DATADIR)'/tree-sitter/queries/sql '$(DESTDIR)$(INCLUDEDIR)'/tree_sitter '$(DESTDIR)$(PCLIBDIR)' '$(DESTDIR)$(LIBDIR)'

@@ -809,6 +809,26 @@ SELECT
             subscript: (literal)))))))
 
 ================================================================================
+Array literal without ARRAY
+================================================================================
+
+SELECT ['a', 'b'], [];
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (array
+            (literal)
+            (literal)))
+        (term
+          value: (array))))))
+
+================================================================================
 Colon path access
 ================================================================================
 
@@ -843,6 +863,51 @@ FROM t;
             lower: (field
               name: (identifier))
             upper: (field
+              name: (identifier))))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier))))))
+
+================================================================================
+Colon path access with dot steps
+================================================================================
+
+SELECT v:a.b, v:a[0].b, arr[1:t.c]
+FROM t;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (path_expression
+            expression: (path_expression
+              expression: (field
+                name: (identifier))
+              key: (identifier))
+            key: (identifier)))
+        (term
+          value: (path_expression
+            expression: (subscript
+              expression: (path_expression
+                expression: (field
+                  name: (identifier))
+                key: (identifier))
+              subscript: (literal))
+            key: (identifier)))
+        (term
+          value: (subscript
+            expression: (field
+              name: (identifier))
+            lower: (literal)
+            upper: (field
+              (object_reference
+                name: (identifier))
               name: (identifier))))))
     (from
       (keyword_from)

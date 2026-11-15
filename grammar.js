@@ -28,13 +28,17 @@ export default grammar({
     [$._column, $._qualified_field],
     [$.object_reference],
     [$.object_reference, $.function_argument],
+    [$.object_reference, $.path_expression],
     [$.between_expression, $.binary_expression],
     [$._subquery_body, $._select_statement],
     [$.subquery, $._subquery_body],
+    [$.binary_expression, $.term],
     [$.time],
     [$.timestamp],
     [$.all_fields],
     [$.values],
+    [$._expression, $.window_function],
+    [$.constraints],
   ],
 
   precedences: $ => [

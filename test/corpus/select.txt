@@ -784,6 +784,63 @@ OFFSET 40;
           (literal))))))
 
 ================================================================================
+Simple select with limit and offset as parameters
+================================================================================
+
+SELECT *
+FROM my_table
+LIMIT $1 OFFSET $2;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (limit
+        (keyword_limit)
+        (parameter)
+        (offset
+          (keyword_offset)
+          (parameter))))))
+
+================================================================================
+Simple select with limit as an expression
+================================================================================
+
+SELECT *
+FROM my_table
+LIMIT 5 + 5;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (limit
+        (keyword_limit)
+        (binary_expression
+          left: (literal)
+          right: (literal))))))
+
+================================================================================
 Simple select with schema
 ================================================================================
 
@@ -1512,6 +1569,95 @@ SELECT * FROM a NATURAL JOIN b USING (id);
 --------------------------------------------------------------------------------
 
 ================================================================================
+ASOF join with a match condition
+================================================================================
+
+SELECT *
+FROM trades t
+ASOF JOIN quotes q
+  MATCH_CONDITION (t.trade_time >= q.quote_time)
+  ON t.symbol = q.symbol;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier))
+        alias: (identifier))
+      (join
+        (keyword_asof)
+        (keyword_join)
+        (relation
+          (object_reference
+            name: (identifier))
+          alias: (identifier))
+        (keyword_match_condition)
+        match_condition: (binary_expression
+          left: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier))
+          right: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier)))
+        (keyword_on)
+        predicate: (binary_expression
+          left: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier))
+          right: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier)))))))
+
+================================================================================
+ASOF left join with USING
+================================================================================
+
+SELECT *
+FROM trades
+ASOF LEFT JOIN quotes USING (symbol, ts);
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (join
+        (keyword_asof)
+        (keyword_left)
+        (keyword_join)
+        (relation
+          (object_reference
+            name: (identifier)))
+        (keyword_using)
+        (list
+          (column
+            (identifier))
+          (column
+            (identifier)))))))
+
+================================================================================
 Lateral join
 ================================================================================
 
@@ -1923,6 +2069,60 @@ ON c.id = d.c_id;
             (object_reference
               name: (identifier))
             name: (identifier)))))))
+
+================================================================================
+Comma relations after a join
+================================================================================
+
+SELECT *
+FROM a
+JOIN b ON a.id = b.id, LATERAL FLATTEN(INPUT => b.arr) AS f, c;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (join
+        (keyword_join)
+        (relation
+          (object_reference
+            name: (identifier)))
+        (keyword_on)
+        predicate: (binary_expression
+          left: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier))
+          right: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier))))
+      (relation
+        (keyword_lateral)
+        (invocation
+          (object_reference
+            name: (identifier))
+          parameter: (named_argument
+            name: (identifier)
+            value: (field
+              (object_reference
+                name: (identifier))
+              name: (identifier))))
+        (keyword_as)
+        alias: (identifier))
+      (relation
+        (object_reference
+          name: (identifier))))))
 
 ================================================================================
 Complex Predicates with order by
@@ -2773,6 +2973,73 @@ WHERE id = $12;
           left: (field
             name: (identifier))
           right: (parameter))))))
+
+================================================================================
+Parameterized Queries w/ ?1 syntax
+================================================================================
+
+SELECT *
+FROM x
+WHERE id = ?1;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (where
+        (keyword_where)
+        predicate: (binary_expression
+          left: (field
+            name: (identifier))
+          right: (parameter))))))
+
+================================================================================
+Parameterized Queries w/ :name syntax
+================================================================================
+
+SELECT id::text
+FROM x
+WHERE id = :id AND kind = :kind;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (cast
+            (field
+              name: (identifier))
+            (keyword_text)))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (where
+        (keyword_where)
+        predicate: (binary_expression
+          left: (binary_expression
+            left: (field
+              name: (identifier))
+            right: (parameter))
+          operator: (keyword_and)
+          right: (binary_expression
+            left: (field
+              name: (identifier))
+            right: (parameter)))))))
 
 ================================================================================
 Select from aliased subquery

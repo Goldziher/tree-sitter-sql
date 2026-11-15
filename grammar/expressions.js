@@ -10,6 +10,8 @@ export default {
         $.field,
       ),
       $.parameter,
+      alias($._numbered_parameter, $.parameter),
+      alias($._named_parameter, $.parameter),
       $.list,
       $.case,
       $.window_function,
@@ -60,6 +62,9 @@ export default {
     ),
 
   parameter: $ => /\?|(\$[0-9]+)/,
+  // ?1 and :name are tokens of their own, so that `parameter` lexes `?` and `$1` as before
+  _numbered_parameter: _ => /\?[0-9]+/,
+  _named_parameter: _ => /:[A-Za-z_][0-9A-Za-z_]*/,
 
   case: $ => seq(
     $.keyword_case,
@@ -142,6 +147,14 @@ export default {
             optional($.order_by)
           )
         ),
+        // e.g. position('a' in b). f(a in (b)) stays a binary IN.
+        prec.dynamic(-1, wrapped_in_parenthesis(
+          seq(
+            field('parameter', $.term),
+            $.keyword_in,
+            field('parameter', $.term),
+          ),
+        )),
         // https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#function_extract
         paren_list(
           seq(
@@ -152,6 +165,14 @@ export default {
             $.keyword_from,
             $.term
           )
+        ),
+        // e.g. first_value(x ignore nulls). One argument only: allowing it after
+        // any argument of the default form costs about 700 more parser states.
+        wrapped_in_parenthesis(
+          seq(
+            field('parameter', $.term),
+            $.null_treatment,
+          ),
         ),
         // _aggregate_function, e.g. group_concat
         wrapped_in_parenthesis(
@@ -207,10 +228,17 @@ export default {
   ),
 
   path_expression: $ => prec.left('subscript',
-    seq(
-      field('expression', $._expression),
-      ':',
-      field('key', $.identifier),
+    choice(
+      seq(
+        field('expression', $._expression),
+        ':',
+        field('key', $.identifier),
+      ),
+      seq(
+        field('expression', choice($.path_expression, $.subscript)),
+        '.',
+        field('key', $.identifier),
+      ),
     ),
   ),
 
