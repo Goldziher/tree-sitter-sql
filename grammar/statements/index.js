@@ -15,6 +15,7 @@ import copy_rules from "./copy.js";
 import select_rules from "./select.js";
 import set_rules from "./set.js";
 import refresh_rules from "./refresh.js";
+import privilege_rules from "./privileges.js";
 
 export default {
 
@@ -22,9 +23,12 @@ export default {
     $.keyword_begin,
     optional(';'),
     repeat(
-      seq(
-        $.statement,
-        ';'
+      choice(
+        seq(
+          $.statement,
+          ';'
+        ),
+        $.meta_command,
       ),
     ),
     $.keyword_end,
@@ -41,6 +45,8 @@ export default {
       $._dml_write,
       optional_parenthesis($._dml_read),
       $.while_statement,
+      $.grant_statement,
+      $.revoke_statement,
     ),
   ),
 
@@ -84,6 +90,7 @@ export default {
     $.comment_statement,
     $.set_statement,
     $.reset_statement,
+    $.pragma_statement,
   ),
 
   ...create_rules,
@@ -94,6 +101,7 @@ export default {
   ...merge_rules,
   ...refresh_rules,
   ...comment_rules,
+  ...privilege_rules,
 
   _dml_write: $ => seq(
     seq(

@@ -13,6 +13,7 @@ export default {
       $.list,
       $.case,
       $.window_function,
+      $.ordered_set_aggregate,
       $.subquery,
       $.cast,
       alias($.implicit_cast, $.cast),
@@ -20,6 +21,7 @@ export default {
       $.invocation,
       $.binary_expression,
       $.subscript,
+      $.path_expression,
       $.unary_expression,
       $.array,
       $.interval,
@@ -135,7 +137,7 @@ export default {
             optional($.keyword_distinct),
             field(
               'parameter',
-              $.term,
+              $._argument,
             ),
             optional($.order_by)
           )
@@ -155,7 +157,7 @@ export default {
         wrapped_in_parenthesis(
           seq(
             optional($.keyword_distinct),
-            field('parameter', $.term),
+            field('parameter', $._argument),
             optional($.order_by),
             optional(seq(
               choice($.keyword_separator, ','),
@@ -171,6 +173,14 @@ export default {
     ),
   ),
 
+  _argument: $ => choice($.term, $.named_argument),
+
+  named_argument: $ => seq(
+    field('name', $.identifier),
+    '=>',
+    field('value', $._expression),
+  ),
+
   filter_expression : $ => seq(
     $.keyword_filter,
     wrapped_in_parenthesis($.where),
@@ -180,7 +190,7 @@ export default {
     wrapped_in_parenthesis($._expression)
   ),
 
-  subscript: $ => prec.left('binary_is',
+  subscript: $ => prec.left('subscript',
     seq(
       field('expression', $._expression),
       "[",
@@ -193,6 +203,14 @@ export default {
         ),
       ),
       "]",
+    ),
+  ),
+
+  path_expression: $ => prec.left('subscript',
+    seq(
+      field('expression', $._expression),
+      ':',
+      field('key', $.identifier),
     ),
   ),
 
@@ -266,6 +284,7 @@ export default {
       [$.not_rlike, 'pattern_matching'],
       [$.similar_to, 'pattern_matching'],
       [$.not_similar_to, 'pattern_matching'],
+      [$.keyword_escape, 'pattern_matching'],
       // binary_is precedence disambiguates `(is not distinct from)` from an
       // `is (not distinct from)` with a unary `not`
       [$.distinct_from, 'binary_is'],
@@ -322,6 +341,8 @@ export default {
       [$.keyword_some, 'unary_not'],
       [$.keyword_all, 'unary_not'],
       [$.op_unary_other, 'unary_other'],
+      ['-', 'unary_sign'],
+      ['+', 'unary_sign'],
     ].map(([operator, precedence]) =>
       prec.left(precedence, seq(
         field('operator', operator),
@@ -356,8 +377,18 @@ export default {
     $.keyword_in,
   ),
 
-  subquery: $ => wrapped_in_parenthesis(
-    $._dml_read
+  subquery: $ => wrapped_in_parenthesis($._subquery_body),
+
+  _subquery_body: $ => choice(
+    // Let expression parentheses wrap scalar subqueries. The statement-level
+    // optional parentheses otherwise greedily consume the inner closing ')'.
+    // Handles cases like SELECT 1 + (SELECT MAX(price) FROM products); where
+    // the inner SELECT is a scalar subquery.
+    seq(
+      optional($._cte),
+      choice($._select_body, $.set_operation, $._show_statement, $._unload_statement),
+    ),
+    wrapped_in_parenthesis($._subquery_body),
   ),
 
   list: $ => paren_list($._expression),
@@ -392,15 +423,16 @@ export default {
     ),
   ),
   _natural_number: _ => /\d+/,
-  _integer: $ => seq(
-    optional(choice("-", "+")),
-    /(0[xX][0-9A-Fa-f]+(_[0-9A-Fa-f]+)*)|(0[oO][0-7]+(_[0-7]+)*)|(0[bB][01]+(_[01]+)*)|(\d+(_\d+)*(e[+-]?\d+(_\d+)*)?)/
+  _integer: $ => choice(
+    prec(1, seq(choice("-", "+"), $._unsigned_integer)),
+    $._unsigned_integer,
   ),
-  _decimal_number: $ => seq(
-    optional(
-      choice("-", "+")),
-    /((\d+(_\d+)*)?[.]\d+(_\d+)*(e[+-]?\d+(_\d+)*)?)|(\d+(_\d+)*[.](e[+-]?\d+(_\d+)*)?)/
+  _unsigned_integer: _ => /(0[xX][0-9A-Fa-f]+(_[0-9A-Fa-f]+)*)|(0[oO][0-7]+(_[0-7]+)*)|(0[bB][01]+(_[01]+)*)|(\d+(_\d+)*(e[+-]?\d+(_\d+)*)?)/,
+  _decimal_number: $ => choice(
+    prec(1, seq(choice("-", "+"), $._unsigned_decimal)),
+    $._unsigned_decimal,
   ),
+  _unsigned_decimal: _ => /((\d+(_\d+)*)?[.]\d+(_\d+)*(e[+-]?\d+(_\d+)*)?)|(\d+(_\d+)*[.](e[+-]?\d+(_\d+)*)?)/,
   _bit_string: $ => seq(/[bBxX]'([^']|'')*'/, repeat(/'([^']|'')*'/)),
   // The identifier should be followed by a string (no parenthesis allowed)
   _string_casting: $ => seq($.identifier, $._single_quote_string),
@@ -416,7 +448,9 @@ export default {
   ),
   _tsql_parameter: $ => seq('@', $._identifier),
   // support nordic chars and umlaue
-  _identifier: _ => /[A-Za-z_\u00C0-\u017F][0-9A-Za-z_\u00C0-\u017F]*/,
+  // a `$` belongs to the identifier only when more of the identifier follows it, so the
+  // closing tag of a dollar-quoted body (`end$$`) is not taken into the identifier
+  _identifier: _ => /[A-Za-z_\u00C0-\u017F][0-9A-Za-z_\u00C0-\u017F]*(\$[0-9A-Za-z_\u00C0-\u017F]+)*/,
 
   object_id: $ => seq(
     $.keyword_object_id,

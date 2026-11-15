@@ -19,10 +19,25 @@
 (relation
   alias: (identifier) @variable)
 
+(pivot
+  alias: (identifier) @variable)
+
+(unpivot
+  alias: (identifier) @variable)
+
 (field
   name: (identifier) @field)
 
+(path_expression
+  key: (identifier) @field)
+
 (term
+  alias: (identifier) @variable)
+
+(rename_columns
+  name: (identifier) @field)
+
+(rename_columns
   alias: (identifier) @variable)
 
 ((term
@@ -35,12 +50,15 @@
 (marginalia) @comment
 
 ((literal) @number
-   (#match? @number "^[-+]?%d+$"))
+   (#match? @number "^[-+]?[0-9]+$"))
 
 ((literal) @float
-  (#match? @float "^[-+]?%d*\.%d*$"))
+  (#match? @float "^[-+]?[0-9]*\\.[0-9]*$"))
 
 (parameter) @parameter
+
+(named_argument
+  name: (identifier) @parameter)
 
 [
  (keyword_true)
@@ -104,6 +122,11 @@
 
 [
   (keyword_select)
+  (keyword_grant)
+  (keyword_revoke)
+  (keyword_privileges)
+  (keyword_granted)
+  (keyword_maintain)
   (keyword_from)
   (keyword_where)
   (keyword_index)
@@ -135,8 +158,12 @@
   (keyword_group)
   (keyword_with)
   (keyword_without)
+  (keyword_within)
   (keyword_as)
   (keyword_having)
+  (keyword_qualify)
+  (keyword_pivot)
+  (keyword_unpivot)
   (keyword_limit)
   (keyword_offset)
   (keyword_table)
@@ -200,6 +227,7 @@
   (keyword_others)
   (keyword_zerofill)
   (keyword_format)
+  (keyword_serde)
   (keyword_fields)
   (keyword_row)
   (keyword_sort)
@@ -210,6 +238,8 @@
   (keyword_uncached)
   (keyword_lines)
   (keyword_stored)
+  (keyword_inputformat)
+  (keyword_outputformat)
   (keyword_virtual)
   (keyword_partitioned)
   (keyword_analyze)
@@ -219,6 +249,7 @@
   (keyword_rewrite)
   (keyword_optimize)
   (keyword_vacuum)
+  (keyword_pragma)
   (keyword_cache)
   (keyword_language)
   (keyword_called)
@@ -346,6 +377,9 @@
  (keyword_high_priority)
  (keyword_low_priority)
  (keyword_ignore)
+ (keyword_abort)
+ (keyword_fail)
+ (keyword_respect)
  (keyword_nothing)
  (keyword_check)
  (keyword_option)
@@ -437,6 +471,7 @@
   "%"
   "^"
   ":="
+  "=>"
   "="
   "<"
   "<="

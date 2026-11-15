@@ -5,6 +5,7 @@ export default {
   _type: $ => prec.left(
     seq(
       choice(
+        $.array_type,
         $.keyword_boolean,
         $.bit,
         $.binary,
@@ -48,7 +49,7 @@ export default {
         $.enum,
 
         $.keyword_date,
-        $.keyword_datetime,
+        $.datetime,
         $.keyword_datetime2,
         $.datetimeoffset,
         $.keyword_smalldatetime,
@@ -73,6 +74,13 @@ export default {
       ),
       optional($.array_size_definition)
     ),
+  ),
+
+  array_type: $ => seq(
+    $.keyword_array,
+    '<',
+    field('element_type', $._type),
+    '>',
   ),
 
   array_size_definition: $ => prec.left(
@@ -137,6 +145,7 @@ export default {
     $.keyword_time,
     $.keyword_zone,
   ),
+  datetime: $ => parametric_type($, $.keyword_datetime),
   datetimeoffset: $ => parametric_type($, $.keyword_datetimeoffset),
   time: $ => seq(
     parametric_type($, $.keyword_time),

@@ -38,10 +38,18 @@ export default {
       seq(
         field(
           "operation",
-          choice(
-            seq($.keyword_union, optional($.keyword_all)),
-            $.keyword_except,
-            $.keyword_intersect,
+          seq(
+            choice(
+              $.keyword_union,
+              $.keyword_except,
+              $.keyword_intersect,
+            ),
+            optional(
+              choice(
+                $.keyword_all,
+                $.keyword_distinct,
+              ),
+            ),
           ),
         ),
         $._select_statement,
@@ -49,8 +57,9 @@ export default {
     ),
   ),
 
-  _select_statement: $ => optional_parenthesis(
-    seq(
+  _select_statement: $ => optional_parenthesis($._select_body),
+
+  _select_body: $ => seq(
       $.select,
       optional(
         seq(
@@ -59,7 +68,6 @@ export default {
         ),
       ),
       optional($.from),
-    ),
   ),
 
   select: $ => seq(
@@ -99,6 +107,30 @@ export default {
       ),
     ),
     '*',
+    optional($.exclude_columns),
+    optional($.rename_columns),
+  ),
+
+  exclude_columns: $ => seq(
+    $.keyword_exclude,
+    choice(
+      alias($._column, $.column),
+      alias($._column_list, $.list),
+    ),
+  ),
+
+  rename_columns: $ => seq(
+    $.keyword_rename,
+    choice(
+      $._renamed_column,
+      paren_list($._renamed_column, true),
+    ),
+  ),
+
+  _renamed_column: $ => seq(
+    field('name', $.identifier),
+    $.keyword_as,
+    field('alias', $.identifier),
   ),
 
   partition_by: $ => seq(
@@ -191,12 +223,32 @@ export default {
   ),
 
   window_function: $ => seq(
-      $.invocation,
-      $.keyword_over,
+      choice(
+          $.invocation,
+          $.ordered_set_aggregate,
+      ),
+      $._over,
       choice(
           $.identifier,
           $.window_specification,
       ),
+  ),
+
+  ordered_set_aggregate: $ => seq(
+    $.invocation,
+    $.keyword_within,
+    $.keyword_group,
+    wrapped_in_parenthesis($.order_by),
+  ),
+
+  _over: $ => seq(
+    optional($.null_treatment),
+    $.keyword_over,
+  ),
+
+  null_treatment: $ => seq(
+    choice($.keyword_ignore, $.keyword_respect),
+    $.keyword_nulls,
   ),
 
   _alias: $ => seq(
@@ -209,7 +261,16 @@ export default {
     optional(
       $.keyword_only,
     ),
-    comma_list($.relation, true),
+    $.relation,
+    repeat(
+      seq(
+        ',',
+        choice(
+          $.relation,
+          alias($._lateral_relation, $.relation),
+        ),
+      ),
+    ),
     optional($.index_hint),
     repeat(
       choice(
@@ -222,6 +283,7 @@ export default {
     optional($.where),
     optional($.group_by),
     optional($.having),
+    optional($.qualify),
     optional($.window_clause),
     optional($.order_by),
     optional($.limit),
@@ -233,6 +295,24 @@ export default {
         $.subquery,
         $.invocation,
         $.object_reference,
+        optional_parenthesis($.values),
+      ),
+      optional(
+        seq(
+          $._alias,
+          optional(alias($._column_list, $.list)),
+        ),
+      ),
+      repeat(choice($.pivot, $.unpivot)),
+    ),
+  ),
+
+  _lateral_relation: $ => prec.right(
+    seq(
+      $.keyword_lateral,
+      choice(
+        $.subquery,
+        $.invocation,
         wrapped_in_parenthesis($.values),
       ),
       optional(
@@ -243,6 +323,51 @@ export default {
       ),
     ),
   ),
+
+  // Snowflake, SQL Server, Oracle, BigQuery, Databricks, DuckDB
+  pivot: $ => prec.right(seq(
+    $.keyword_pivot,
+    wrapped_in_parenthesis(
+      seq(
+        comma_list($.term, true),
+        $.keyword_for,
+        field('column', alias($._qualified_field, $.field)),
+        $.keyword_in,
+        paren_list($.term, true),
+      ),
+    ),
+    optional(
+      seq(
+        $._alias,
+        optional(alias($._column_list, $.list)),
+      ),
+    ),
+  )),
+
+  unpivot: $ => prec.right(seq(
+    $.keyword_unpivot,
+    optional(
+      seq(
+        choice($.keyword_include, $.keyword_exclude),
+        $.keyword_nulls,
+      ),
+    ),
+    wrapped_in_parenthesis(
+      seq(
+        field('value', $.identifier),
+        $.keyword_for,
+        field('name', $.identifier),
+        $.keyword_in,
+        paren_list(alias($._qualified_field, $.field), true),
+      ),
+    ),
+    optional(
+      seq(
+        $._alias,
+        optional(alias($._column_list, $.list)),
+      ),
+    ),
+  )),
 
   values: $ => seq(
     $.keyword_values,
@@ -275,33 +400,31 @@ export default {
     ),
   ),
 
-  join: $ => seq(
-    optional($.keyword_natural),
-    optional(
+  join: $ => choice(
+    seq(
+      $.keyword_natural,
+      optional(join_type($)),
+      $.keyword_join,
+      $.relation,
+      optional($.index_hint),
+    ),
+    seq(
+      optional(join_type($)),
+      $.keyword_join,
+      $.relation,
+      optional($.index_hint),
+      optional($.join),
       choice(
-        $.keyword_left,
-        seq($.keyword_full, $.keyword_outer),
-        seq($.keyword_left, $.keyword_outer),
-        $.keyword_right,
-        seq($.keyword_right, $.keyword_outer),
-        $.keyword_inner,
-        $.keyword_full,
+        seq(
+          $.keyword_on,
+          field("predicate", $._expression),
+        ),
+        seq(
+          $.keyword_using,
+          alias($._column_list, $.list),
+        ),
       ),
     ),
-    $.keyword_join,
-    $.relation,
-    optional($.index_hint),
-    optional($.join),
-    choice(
-      seq(
-        $.keyword_on,
-        field("predicate", $._expression),
-      ),
-      seq(
-        $.keyword_using,
-        alias($._column_list, $.list),
-      )
-    )
   ),
 
   cross_join: $ => prec.right(
@@ -339,14 +462,18 @@ export default {
     choice(
       $.invocation,
       $.subquery,
+      wrapped_in_parenthesis($.values),
     ),
     optional(
-      choice(
-        seq(
-          $.keyword_as,
+      seq(
+        choice(
+          seq(
+            $.keyword_as,
+            field('alias', $.identifier),
+          ),
           field('alias', $.identifier),
         ),
-        field('alias', $.identifier),
+        optional(alias($._column_list, $.list)),
       ),
     ),
     $.keyword_on,
@@ -357,45 +484,67 @@ export default {
     ),
   ),
 
-  lateral_cross_join: $ => seq(
+  lateral_cross_join: $ => prec.right(seq(
     $.keyword_cross,
     $.keyword_join,
     $.keyword_lateral,
     choice(
       $.invocation,
       $.subquery,
+      wrapped_in_parenthesis($.values),
     ),
     optional(
-      choice(
-        seq(
-          $.keyword_as,
+      seq(
+        choice(
+          seq(
+            $.keyword_as,
+            field('alias', $.identifier),
+          ),
           field('alias', $.identifier),
         ),
-        field('alias', $.identifier),
+        optional(alias($._column_list, $.list)),
       ),
     ),
-  ),
+  )),
 
   where: $ => seq(
     $.keyword_where,
     field("predicate", $._expression),
   ),
 
-  group_by: $ => seq(
+  group_by: $ => prec.right(seq(
     $.keyword_group,
     $.keyword_by,
-    comma_list($._expression, true),
-  ),
+    choice(
+      // DuckDB, Snowflake, Databricks, BigQuery: group by every
+      // non-aggregate column of the select list.
+      $.keyword_all,
+      comma_list($._expression, true),
+    ),
+  )),
 
   having: $ => seq(
     $.keyword_having,
     $._expression,
   ),
 
+  // Snowflake, BigQuery, Databricks
+  qualify: $ => seq(
+    $.keyword_qualify,
+    field("predicate", $._expression),
+  ),
+
   order_by: $ => prec.right(seq(
     $.keyword_order,
     $.keyword_by,
-    comma_list($.order_target, true),
+    choice(
+      // DuckDB: order by every column of the select list, left to right.
+      seq(
+        $.keyword_all,
+        optional(seq($.direction, optional($._nulls_order))),
+      ),
+      comma_list($.order_target, true),
+    ),
   )),
 
   order_target: $ => seq(
@@ -409,16 +558,16 @@ export default {
             choice('<', '>', '<=', '>='),
           ),
         ),
-        optional(
-          seq(
-            $.keyword_nulls,
-            choice(
-              $.keyword_first,
-              $.keyword_last,
-            ),
-          ),
-        ),
+        optional($._nulls_order),
       ),
+    ),
+  ),
+
+  _nulls_order: $ => seq(
+    $.keyword_nulls,
+    choice(
+      $.keyword_first,
+      $.keyword_last,
     ),
   ),
 
@@ -439,3 +588,15 @@ export default {
   ),
 
 };
+
+function join_type($) {
+  return choice(
+    $.keyword_left,
+    seq($.keyword_full, $.keyword_outer),
+    seq($.keyword_left, $.keyword_outer),
+    $.keyword_right,
+    seq($.keyword_right, $.keyword_outer),
+    $.keyword_inner,
+    $.keyword_full,
+  );
+}

@@ -1,4 +1,4 @@
-import { comma_list } from "../helpers.js";
+import { comma_list, paren_list } from "../helpers.js";
 
 export default {
 
@@ -9,7 +9,7 @@ export default {
 
   insert: $ => seq(
     choice(
-      $.keyword_insert,
+      seq($.keyword_insert, optional($._or_conflict)),
       $.keyword_replace
     ),
     optional(
@@ -47,9 +47,34 @@ export default {
     ),
   ),
 
+  // SQLite: INSERT OR IGNORE, UPDATE OR REPLACE
+  _or_conflict: $ => seq(
+    $.keyword_or,
+    choice(
+      $.keyword_rollback,
+      $.keyword_abort,
+      $.keyword_fail,
+      $.keyword_ignore,
+      $.keyword_replace,
+    ),
+  ),
+
   _on_conflict: $ => seq(
     $.keyword_on,
     $.keyword_conflict,
+    optional(
+      choice(
+        seq(
+          $.index_fields,
+          optional($.where),
+        ),
+        seq(
+          $.keyword_on,
+          $.keyword_constraint,
+          $.identifier,
+        ),
+      ),
+    ),
     seq(
       $.keyword_do,
       choice(
@@ -78,14 +103,20 @@ export default {
 
   assignment: $ => seq(
     field('left',
-      alias(
-        $._qualified_field,
-        $.field,
+      choice(
+        alias(
+          $._qualified_field,
+          $.field,
+        ),
+        // (a, b) = (1, 2) | ROW(1, 2) | (SELECT ...)
+        alias($._field_list, $.list),
       ),
     ),
     '=',
     field('right', $._expression),
   ),
+
+  _field_list: $ => paren_list(alias($._qualified_field, $.field), true),
 
   _insert_values: $ => seq(
     optional(alias($._column_list, $.list)),

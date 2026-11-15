@@ -70,11 +70,19 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
+          "type": "exclude_columns",
+          "named": true
+        },
+        {
           "type": "object_reference",
+          "named": true
+        },
+        {
+          "type": "rename_columns",
           "named": true
         }
       ]
@@ -137,6 +145,10 @@
             "named": true
           },
           {
+            "type": "array_type",
+            "named": true
+          },
+          {
             "type": "bigint",
             "named": true
           },
@@ -150,6 +162,10 @@
           },
           {
             "type": "char",
+            "named": true
+          },
+          {
+            "type": "datetime",
             "named": true
           },
           {
@@ -198,10 +214,6 @@
           },
           {
             "type": "keyword_date",
-            "named": true
-          },
-          {
-            "type": "keyword_datetime",
             "named": true
           },
           {
@@ -474,11 +486,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -971,6 +991,10 @@
           "named": true
         },
         {
+          "type": "array_type",
+          "named": true
+        },
+        {
           "type": "bigint",
           "named": true
         },
@@ -988,6 +1012,10 @@
         },
         {
           "type": "char",
+          "named": true
+        },
+        {
+          "type": "datetime",
           "named": true
         },
         {
@@ -1060,10 +1088,6 @@
         },
         {
           "type": "keyword_date",
-          "named": true
-        },
-        {
-          "type": "keyword_datetime",
           "named": true
         },
         {
@@ -1412,6 +1436,10 @@
           "named": true
         },
         {
+          "type": "array_type",
+          "named": true
+        },
+        {
           "type": "bigint",
           "named": true
         },
@@ -1429,6 +1457,10 @@
         },
         {
           "type": "char",
+          "named": true
+        },
+        {
+          "type": "datetime",
           "named": true
         },
         {
@@ -1513,10 +1545,6 @@
         },
         {
           "type": "keyword_date",
-          "named": true
-        },
-        {
-          "type": "keyword_datetime",
           "named": true
         },
         {
@@ -1917,11 +1945,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -1986,6 +2022,254 @@
     }
   },
   {
+    "type": "array_type",
+    "named": true,
+    "fields": {
+      "custom_type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "object_reference",
+            "named": true
+          }
+        ]
+      },
+      "element_type": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "array_size_definition",
+            "named": true
+          },
+          {
+            "type": "array_type",
+            "named": true
+          },
+          {
+            "type": "bigint",
+            "named": true
+          },
+          {
+            "type": "binary",
+            "named": true
+          },
+          {
+            "type": "bit",
+            "named": true
+          },
+          {
+            "type": "char",
+            "named": true
+          },
+          {
+            "type": "datetime",
+            "named": true
+          },
+          {
+            "type": "datetimeoffset",
+            "named": true
+          },
+          {
+            "type": "decimal",
+            "named": true
+          },
+          {
+            "type": "double",
+            "named": true
+          },
+          {
+            "type": "enum",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": true
+          },
+          {
+            "type": "keyword_bigserial",
+            "named": true
+          },
+          {
+            "type": "keyword_boolean",
+            "named": true
+          },
+          {
+            "type": "keyword_box2d",
+            "named": true
+          },
+          {
+            "type": "keyword_box3d",
+            "named": true
+          },
+          {
+            "type": "keyword_bytea",
+            "named": true
+          },
+          {
+            "type": "keyword_date",
+            "named": true
+          },
+          {
+            "type": "keyword_datetime2",
+            "named": true
+          },
+          {
+            "type": "keyword_geography",
+            "named": true
+          },
+          {
+            "type": "keyword_geometry",
+            "named": true
+          },
+          {
+            "type": "keyword_image",
+            "named": true
+          },
+          {
+            "type": "keyword_inet",
+            "named": true
+          },
+          {
+            "type": "keyword_interval",
+            "named": true
+          },
+          {
+            "type": "keyword_json",
+            "named": true
+          },
+          {
+            "type": "keyword_jsonb",
+            "named": true
+          },
+          {
+            "type": "keyword_money",
+            "named": true
+          },
+          {
+            "type": "keyword_name",
+            "named": true
+          },
+          {
+            "type": "keyword_oid",
+            "named": true
+          },
+          {
+            "type": "keyword_regclass",
+            "named": true
+          },
+          {
+            "type": "keyword_regnamespace",
+            "named": true
+          },
+          {
+            "type": "keyword_regproc",
+            "named": true
+          },
+          {
+            "type": "keyword_regtype",
+            "named": true
+          },
+          {
+            "type": "keyword_serial",
+            "named": true
+          },
+          {
+            "type": "keyword_smalldatetime",
+            "named": true
+          },
+          {
+            "type": "keyword_smallmoney",
+            "named": true
+          },
+          {
+            "type": "keyword_smallserial",
+            "named": true
+          },
+          {
+            "type": "keyword_string",
+            "named": true
+          },
+          {
+            "type": "keyword_text",
+            "named": true
+          },
+          {
+            "type": "keyword_timestamptz",
+            "named": true
+          },
+          {
+            "type": "keyword_uuid",
+            "named": true
+          },
+          {
+            "type": "keyword_xml",
+            "named": true
+          },
+          {
+            "type": "mediumint",
+            "named": true
+          },
+          {
+            "type": "nchar",
+            "named": true
+          },
+          {
+            "type": "numeric",
+            "named": true
+          },
+          {
+            "type": "nvarchar",
+            "named": true
+          },
+          {
+            "type": "object_reference",
+            "named": true
+          },
+          {
+            "type": "smallint",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "timestamp",
+            "named": true
+          },
+          {
+            "type": "tinyint",
+            "named": true
+          },
+          {
+            "type": "varbinary",
+            "named": true
+          },
+          {
+            "type": "varchar",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword_array",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "assignment",
     "named": true,
     "fields": {
@@ -1995,6 +2279,10 @@
         "types": [
           {
             "type": "field",
+            "named": true
+          },
+          {
+            "type": "list",
             "named": true
           }
         ]
@@ -2052,11 +2340,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -2151,11 +2447,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -2229,11 +2533,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -2307,11 +2619,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -2475,11 +2795,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -2566,6 +2894,10 @@
           },
           {
             "type": "keyword_and",
+            "named": true
+          },
+          {
+            "type": "keyword_escape",
             "named": true
           },
           {
@@ -2671,11 +3003,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -2742,6 +3082,10 @@
         },
         {
           "type": "keyword_end",
+          "named": true
+        },
+        {
+          "type": "meta_command",
           "named": true
         },
         {
@@ -2828,11 +3172,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -2931,11 +3283,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -2970,6 +3330,10 @@
           "named": true
         },
         {
+          "type": "array_type",
+          "named": true
+        },
+        {
           "type": "between_expression",
           "named": true
         },
@@ -2999,6 +3363,10 @@
         },
         {
           "type": "char",
+          "named": true
+        },
+        {
+          "type": "datetime",
           "named": true
         },
         {
@@ -3067,10 +3435,6 @@
         },
         {
           "type": "keyword_date",
-          "named": true
-        },
-        {
-          "type": "keyword_datetime",
           "named": true
         },
         {
@@ -3198,11 +3562,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -3418,6 +3790,10 @@
             "named": true
           },
           {
+            "type": "array_type",
+            "named": true
+          },
+          {
             "type": "bigint",
             "named": true
           },
@@ -3431,6 +3807,10 @@
           },
           {
             "type": "char",
+            "named": true
+          },
+          {
+            "type": "datetime",
             "named": true
           },
           {
@@ -3479,10 +3859,6 @@
           },
           {
             "type": "keyword_date",
-            "named": true
-          },
-          {
-            "type": "keyword_datetime",
             "named": true
           },
           {
@@ -3793,11 +4169,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -4019,11 +4403,43 @@
       "required": true,
       "types": [
         {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "between_expression",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
+          "type": "case",
+          "named": true
+        },
+        {
+          "type": "cast",
+          "named": true
+        },
+        {
+          "type": "exists",
+          "named": true
+        },
+        {
+          "type": "field",
+          "named": true
+        },
+        {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "invocation",
           "named": true
         },
         {
@@ -4119,7 +4535,15 @@
           "named": true
         },
         {
+          "type": "list",
+          "named": true
+        },
+        {
           "type": "literal",
+          "named": true
+        },
+        {
+          "type": "object_id",
           "named": true
         },
         {
@@ -4128,6 +4552,38 @@
         },
         {
           "type": "ordered_columns",
+          "named": true
+        },
+        {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
+          "type": "parameter",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
+          "named": true
+        },
+        {
+          "type": "subquery",
+          "named": true
+        },
+        {
+          "type": "subscript",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "window_function",
           "named": true
         }
       ]
@@ -4310,6 +4766,10 @@
           "named": true
         },
         {
+          "type": "array_type",
+          "named": true
+        },
+        {
           "type": "bigint",
           "named": true
         },
@@ -4327,6 +4787,10 @@
         },
         {
           "type": "column_definitions",
+          "named": true
+        },
+        {
+          "type": "datetime",
           "named": true
         },
         {
@@ -4382,6 +4846,10 @@
           "named": true
         },
         {
+          "type": "function_set",
+          "named": true
+        },
+        {
           "type": "function_strictness",
           "named": true
         },
@@ -4423,10 +4891,6 @@
         },
         {
           "type": "keyword_date",
-          "named": true
-        },
-        {
-          "type": "keyword_datetime",
           "named": true
         },
         {
@@ -4905,6 +5369,10 @@
           "named": true
         },
         {
+          "type": "function_set",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -4968,7 +5436,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "array",
@@ -5107,11 +5575,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -5354,6 +5830,10 @@
           "named": true
         },
         {
+          "type": "array_type",
+          "named": true
+        },
+        {
           "type": "bigint",
           "named": true
         },
@@ -5367,6 +5847,10 @@
         },
         {
           "type": "char",
+          "named": true
+        },
+        {
+          "type": "datetime",
           "named": true
         },
         {
@@ -5435,10 +5919,6 @@
         },
         {
           "type": "keyword_date",
-          "named": true
-        },
-        {
-          "type": "keyword_datetime",
           "named": true
         },
         {
@@ -6003,11 +6483,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -6279,6 +6767,32 @@
         },
         {
           "type": "statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "datetime",
+    "named": true,
+    "fields": {
+      "size": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword_datetime",
           "named": true
         }
       ]
@@ -6660,6 +7174,16 @@
       "name": {
         "multiple": false,
         "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "schema": {
+        "multiple": false,
+        "required": false,
         "types": [
           {
             "type": "identifier",
@@ -7070,6 +7594,29 @@
     }
   },
   {
+    "type": "exclude_columns",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "column",
+          "named": true
+        },
+        {
+          "type": "keyword_exclude",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "exists",
     "named": true,
     "fields": {},
@@ -7167,11 +7714,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -7457,6 +8012,10 @@
           "named": true
         },
         {
+          "type": "keyword_using",
+          "named": true
+        },
+        {
           "type": "lateral_cross_join",
           "named": true
         },
@@ -7474,6 +8033,10 @@
         },
         {
           "type": "order_by",
+          "named": true
+        },
+        {
+          "type": "qualify",
           "named": true
         },
         {
@@ -7515,6 +8078,10 @@
           "named": true
         },
         {
+          "type": "array_type",
+          "named": true
+        },
+        {
           "type": "bigint",
           "named": true
         },
@@ -7528,6 +8095,10 @@
         },
         {
           "type": "char",
+          "named": true
+        },
+        {
+          "type": "datetime",
           "named": true
         },
         {
@@ -7580,10 +8151,6 @@
         },
         {
           "type": "keyword_date",
-          "named": true
-        },
-        {
-          "type": "keyword_datetime",
           "named": true
         },
         {
@@ -7853,11 +8420,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -7926,6 +8501,10 @@
           "named": true
         },
         {
+          "type": "array_type",
+          "named": true
+        },
+        {
           "type": "bigint",
           "named": true
         },
@@ -7939,6 +8518,10 @@
         },
         {
           "type": "char",
+          "named": true
+        },
+        {
+          "type": "datetime",
           "named": true
         },
         {
@@ -7991,10 +8574,6 @@
         },
         {
           "type": "keyword_date",
-          "named": true
-        },
-        {
-          "type": "keyword_datetime",
           "named": true
         },
         {
@@ -8252,6 +8831,57 @@
     }
   },
   {
+    "type": "function_set",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "keyword_current",
+          "named": true
+        },
+        {
+          "type": "keyword_default",
+          "named": true
+        },
+        {
+          "type": "keyword_from",
+          "named": true
+        },
+        {
+          "type": "keyword_off",
+          "named": true
+        },
+        {
+          "type": "keyword_on",
+          "named": true
+        },
+        {
+          "type": "keyword_set",
+          "named": true
+        },
+        {
+          "type": "keyword_to",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        },
+        {
+          "type": "object_reference",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "function_strictness",
     "named": true,
     "fields": {},
@@ -8329,6 +8959,101 @@
     }
   },
   {
+    "type": "grant_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "keyword_all",
+          "named": true
+        },
+        {
+          "type": "keyword_by",
+          "named": true
+        },
+        {
+          "type": "keyword_current_role",
+          "named": true
+        },
+        {
+          "type": "keyword_current_user",
+          "named": true
+        },
+        {
+          "type": "keyword_grant",
+          "named": true
+        },
+        {
+          "type": "keyword_granted",
+          "named": true
+        },
+        {
+          "type": "keyword_group",
+          "named": true
+        },
+        {
+          "type": "keyword_in",
+          "named": true
+        },
+        {
+          "type": "keyword_on",
+          "named": true
+        },
+        {
+          "type": "keyword_option",
+          "named": true
+        },
+        {
+          "type": "keyword_privileges",
+          "named": true
+        },
+        {
+          "type": "keyword_public",
+          "named": true
+        },
+        {
+          "type": "keyword_schema",
+          "named": true
+        },
+        {
+          "type": "keyword_session_user",
+          "named": true
+        },
+        {
+          "type": "keyword_table",
+          "named": true
+        },
+        {
+          "type": "keyword_tables",
+          "named": true
+        },
+        {
+          "type": "keyword_to",
+          "named": true
+        },
+        {
+          "type": "keyword_with",
+          "named": true
+        },
+        {
+          "type": "object_reference",
+          "named": true
+        },
+        {
+          "type": "table_privilege",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "group_by",
     "named": true,
     "fields": {},
@@ -8373,6 +9098,10 @@
           "named": true
         },
         {
+          "type": "keyword_all",
+          "named": true
+        },
+        {
           "type": "keyword_by",
           "named": true
         },
@@ -8393,11 +9122,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -8480,11 +9217,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -8650,11 +9395,23 @@
           "named": true
         },
         {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "index_fields",
+          "named": true
+        },
+        {
           "type": "interval",
           "named": true
         },
         {
           "type": "invocation",
+          "named": true
+        },
+        {
+          "type": "keyword_abort",
           "named": true
         },
         {
@@ -8667,6 +9424,10 @@
         },
         {
           "type": "keyword_conflict",
+          "named": true
+        },
+        {
+          "type": "keyword_constraint",
           "named": true
         },
         {
@@ -8683,6 +9444,10 @@
         },
         {
           "type": "keyword_duplicate",
+          "named": true
+        },
+        {
+          "type": "keyword_fail",
           "named": true
         },
         {
@@ -8734,6 +9499,10 @@
           "named": true
         },
         {
+          "type": "keyword_or",
+          "named": true
+        },
+        {
           "type": "keyword_overwrite",
           "named": true
         },
@@ -8747,6 +9516,10 @@
         },
         {
           "type": "keyword_replace",
+          "named": true
+        },
+        {
+          "type": "keyword_rollback",
           "named": true
         },
         {
@@ -8818,11 +9591,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -8925,6 +9706,10 @@
         "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "named_argument",
+            "named": true
+          },
           {
             "type": "term",
             "named": true
@@ -9061,11 +9846,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -9145,6 +9938,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "keyword_auto_increment",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "keyword_bigint",
@@ -9266,7 +10064,15 @@
           "named": true
         },
         {
+          "type": "list",
+          "named": true
+        },
+        {
           "type": "subquery",
+          "named": true
+        },
+        {
+          "type": "values",
           "named": true
         }
       ]
@@ -9376,11 +10182,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -9393,6 +10207,10 @@
         },
         {
           "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "values",
           "named": true
         },
         {
@@ -9486,11 +10304,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -9606,6 +10432,108 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "named_argument",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "between_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "case",
+            "named": true
+          },
+          {
+            "type": "cast",
+            "named": true
+          },
+          {
+            "type": "exists",
+            "named": true
+          },
+          {
+            "type": "field",
+            "named": true
+          },
+          {
+            "type": "interval",
+            "named": true
+          },
+          {
+            "type": "invocation",
+            "named": true
+          },
+          {
+            "type": "list",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "object_id",
+            "named": true
+          },
+          {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
+            "type": "parameter",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
+            "named": true
+          },
+          {
+            "type": "subquery",
+            "named": true
+          },
+          {
+            "type": "subscript",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "window_function",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -9736,6 +10664,29 @@
         },
         {
           "type": "keyword_to",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "null_treatment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword_ignore",
+          "named": true
+        },
+        {
+          "type": "keyword_nulls",
+          "named": true
+        },
+        {
+          "type": "keyword_respect",
           "named": true
         }
       ]
@@ -9896,7 +10847,27 @@
       "required": true,
       "types": [
         {
+          "type": "direction",
+          "named": true
+        },
+        {
+          "type": "keyword_all",
+          "named": true
+        },
+        {
           "type": "keyword_by",
+          "named": true
+        },
+        {
+          "type": "keyword_first",
+          "named": true
+        },
+        {
+          "type": "keyword_last",
+          "named": true
+        },
+        {
+          "type": "keyword_nulls",
           "named": true
         },
         {
@@ -9987,11 +10958,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -10023,6 +11002,33 @@
       "types": [
         {
           "type": "column",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "ordered_set_aggregate",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "invocation",
+          "named": true
+        },
+        {
+          "type": "keyword_group",
+          "named": true
+        },
+        {
+          "type": "keyword_within",
+          "named": true
+        },
+        {
+          "type": "order_by",
           "named": true
         }
       ]
@@ -10085,11 +11091,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -10176,11 +11190,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -10197,6 +11219,199 @@
         },
         {
           "type": "window_function",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "path_expression",
+    "named": true,
+    "fields": {
+      "expression": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "between_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "case",
+            "named": true
+          },
+          {
+            "type": "cast",
+            "named": true
+          },
+          {
+            "type": "exists",
+            "named": true
+          },
+          {
+            "type": "field",
+            "named": true
+          },
+          {
+            "type": "interval",
+            "named": true
+          },
+          {
+            "type": "invocation",
+            "named": true
+          },
+          {
+            "type": "list",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "object_id",
+            "named": true
+          },
+          {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
+            "type": "parameter",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
+            "named": true
+          },
+          {
+            "type": "subquery",
+            "named": true
+          },
+          {
+            "type": "subscript",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "window_function",
+            "named": true
+          }
+        ]
+      },
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "pivot",
+    "named": true,
+    "fields": {
+      "alias": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "column": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "field",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword_as",
+          "named": true
+        },
+        {
+          "type": "keyword_for",
+          "named": true
+        },
+        {
+          "type": "keyword_in",
+          "named": true
+        },
+        {
+          "type": "keyword_pivot",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "term",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pragma_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "keyword_off",
+          "named": true
+        },
+        {
+          "type": "keyword_on",
+          "named": true
+        },
+        {
+          "type": "keyword_pragma",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        },
+        {
+          "type": "object_reference",
           "named": true
         }
       ]
@@ -10291,11 +11506,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -10339,11 +11562,117 @@
           "named": true
         },
         {
+          "type": "meta_command",
+          "named": true
+        },
+        {
           "type": "statement",
           "named": true
         },
         {
           "type": "transaction",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "qualify",
+    "named": true,
+    "fields": {
+      "predicate": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "between_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "case",
+            "named": true
+          },
+          {
+            "type": "cast",
+            "named": true
+          },
+          {
+            "type": "exists",
+            "named": true
+          },
+          {
+            "type": "field",
+            "named": true
+          },
+          {
+            "type": "interval",
+            "named": true
+          },
+          {
+            "type": "invocation",
+            "named": true
+          },
+          {
+            "type": "list",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "object_id",
+            "named": true
+          },
+          {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
+            "type": "parameter",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
+            "named": true
+          },
+          {
+            "type": "subquery",
+            "named": true
+          },
+          {
+            "type": "subscript",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "window_function",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword_qualify",
           "named": true
         }
       ]
@@ -10420,6 +11749,10 @@
           "named": true
         },
         {
+          "type": "keyword_lateral",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -10428,7 +11761,15 @@
           "named": true
         },
         {
+          "type": "pivot",
+          "named": true
+        },
+        {
           "type": "subquery",
+          "named": true
+        },
+        {
+          "type": "unpivot",
           "named": true
         },
         {
@@ -10477,6 +11818,46 @@
         },
         {
           "type": "keyword_to",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "rename_columns",
+    "named": true,
+    "fields": {
+      "alias": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword_as",
+          "named": true
+        },
+        {
+          "type": "keyword_rename",
           "named": true
         }
       ]
@@ -10560,6 +11941,113 @@
     }
   },
   {
+    "type": "revoke_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "keyword_all",
+          "named": true
+        },
+        {
+          "type": "keyword_by",
+          "named": true
+        },
+        {
+          "type": "keyword_cascade",
+          "named": true
+        },
+        {
+          "type": "keyword_current_role",
+          "named": true
+        },
+        {
+          "type": "keyword_current_user",
+          "named": true
+        },
+        {
+          "type": "keyword_for",
+          "named": true
+        },
+        {
+          "type": "keyword_from",
+          "named": true
+        },
+        {
+          "type": "keyword_grant",
+          "named": true
+        },
+        {
+          "type": "keyword_granted",
+          "named": true
+        },
+        {
+          "type": "keyword_group",
+          "named": true
+        },
+        {
+          "type": "keyword_in",
+          "named": true
+        },
+        {
+          "type": "keyword_on",
+          "named": true
+        },
+        {
+          "type": "keyword_option",
+          "named": true
+        },
+        {
+          "type": "keyword_privileges",
+          "named": true
+        },
+        {
+          "type": "keyword_public",
+          "named": true
+        },
+        {
+          "type": "keyword_restrict",
+          "named": true
+        },
+        {
+          "type": "keyword_revoke",
+          "named": true
+        },
+        {
+          "type": "keyword_schema",
+          "named": true
+        },
+        {
+          "type": "keyword_session_user",
+          "named": true
+        },
+        {
+          "type": "keyword_table",
+          "named": true
+        },
+        {
+          "type": "keyword_tables",
+          "named": true
+        },
+        {
+          "type": "object_reference",
+          "named": true
+        },
+        {
+          "type": "table_privilege",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "row_format",
     "named": true,
     "fields": {
@@ -10584,6 +12072,16 @@
         ]
       },
       "row_terminated_char": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "serde_class": {
         "multiple": false,
         "required": false,
         "types": [
@@ -10624,6 +12122,10 @@
         },
         {
           "type": "keyword_row",
+          "named": true
+        },
+        {
+          "type": "keyword_serde",
           "named": true
         },
         {
@@ -10736,6 +12238,10 @@
             "named": true
           },
           {
+            "type": "keyword_distinct",
+            "named": true
+          },
+          {
             "type": "keyword_except",
             "named": true
           },
@@ -10752,7 +12258,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "from",
@@ -11088,11 +12594,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -11318,6 +12832,10 @@
         },
         {
           "type": "from",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -11649,11 +13167,23 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
+          "named": true
+        },
+        {
+          "type": "pragma_statement",
           "named": true
         },
         {
@@ -11666,6 +13196,10 @@
         },
         {
           "type": "returning",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -11823,7 +13357,28 @@
   {
     "type": "stored_as",
     "named": true,
-    "fields": {},
+    "fields": {
+      "input_format": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "output_format": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -11841,11 +13396,19 @@
           "named": true
         },
         {
+          "type": "keyword_inputformat",
+          "named": true
+        },
+        {
           "type": "keyword_jsonfile",
           "named": true
         },
         {
           "type": "keyword_orc",
+          "named": true
+        },
+        {
+          "type": "keyword_outputformat",
           "named": true
         },
         {
@@ -12027,11 +13590,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -12126,11 +13697,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -12204,11 +13783,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -12282,11 +13869,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -12360,11 +13955,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -12508,6 +14111,53 @@
     }
   },
   {
+    "type": "table_privilege",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "keyword_delete",
+          "named": true
+        },
+        {
+          "type": "keyword_insert",
+          "named": true
+        },
+        {
+          "type": "keyword_maintain",
+          "named": true
+        },
+        {
+          "type": "keyword_references",
+          "named": true
+        },
+        {
+          "type": "keyword_select",
+          "named": true
+        },
+        {
+          "type": "keyword_trigger",
+          "named": true
+        },
+        {
+          "type": "keyword_truncate",
+          "named": true
+        },
+        {
+          "type": "keyword_update",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "table_sort",
     "named": true,
     "fields": {},
@@ -12643,11 +14293,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -12819,6 +14477,10 @@
           "named": true
         },
         {
+          "type": "meta_command",
+          "named": true
+        },
+        {
           "type": "statement",
           "named": true
         }
@@ -12882,11 +14544,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -12911,6 +14581,14 @@
         "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
           {
             "type": "bang",
             "named": true
@@ -12940,6 +14618,84 @@
     }
   },
   {
+    "type": "unpivot",
+    "named": true,
+    "fields": {
+      "alias": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "field",
+          "named": true
+        },
+        {
+          "type": "keyword_as",
+          "named": true
+        },
+        {
+          "type": "keyword_exclude",
+          "named": true
+        },
+        {
+          "type": "keyword_for",
+          "named": true
+        },
+        {
+          "type": "keyword_in",
+          "named": true
+        },
+        {
+          "type": "keyword_include",
+          "named": true
+        },
+        {
+          "type": "keyword_nulls",
+          "named": true
+        },
+        {
+          "type": "keyword_unpivot",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "update",
     "named": true,
     "fields": {},
@@ -12960,7 +14716,31 @@
           "named": true
         },
         {
+          "type": "keyword_abort",
+          "named": true
+        },
+        {
+          "type": "keyword_fail",
+          "named": true
+        },
+        {
+          "type": "keyword_ignore",
+          "named": true
+        },
+        {
           "type": "keyword_only",
+          "named": true
+        },
+        {
+          "type": "keyword_or",
+          "named": true
+        },
+        {
+          "type": "keyword_replace",
+          "named": true
+        },
+        {
+          "type": "keyword_rollback",
           "named": true
         },
         {
@@ -13025,6 +14805,10 @@
           "named": true
         },
         {
+          "type": "array_type",
+          "named": true
+        },
+        {
           "type": "bigint",
           "named": true
         },
@@ -13038,6 +14822,10 @@
         },
         {
           "type": "char",
+          "named": true
+        },
+        {
+          "type": "datetime",
           "named": true
         },
         {
@@ -13090,10 +14878,6 @@
         },
         {
           "type": "keyword_date",
-          "named": true
-        },
-        {
-          "type": "keyword_datetime",
           "named": true
         },
         {
@@ -13381,11 +15165,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -13592,11 +15384,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -13695,11 +15495,19 @@
             "named": true
           },
           {
+            "type": "ordered_set_aggregate",
+            "named": true
+          },
+          {
             "type": "parameter",
             "named": true
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "path_expression",
             "named": true
           },
           {
@@ -13801,11 +15609,19 @@
           "named": true
         },
         {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
         {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "path_expression",
           "named": true
         },
         {
@@ -13942,6 +15758,14 @@
           "named": true
         },
         {
+          "type": "null_treatment",
+          "named": true
+        },
+        {
+          "type": "ordered_set_aggregate",
+          "named": true
+        },
+        {
           "type": "window_specification",
           "named": true
         }
@@ -14044,6 +15868,10 @@
     "named": false
   },
   {
+    "type": "=>",
+    "named": false
+  },
+  {
     "type": ">",
     "named": false
   },
@@ -14082,6 +15910,10 @@
   },
   {
     "type": "dollar_quote",
+    "named": true
+  },
+  {
+    "type": "keyword_abort",
     "named": true
   },
   {
@@ -14146,10 +15978,6 @@
   },
   {
     "type": "keyword_authorization",
-    "named": true
-  },
-  {
-    "type": "keyword_auto_increment",
     "named": true
   },
   {
@@ -14505,6 +16333,10 @@
     "named": true
   },
   {
+    "type": "keyword_fail",
+    "named": true
+  },
+  {
     "type": "keyword_false",
     "named": true
   },
@@ -14597,6 +16429,14 @@
     "named": true
   },
   {
+    "type": "keyword_grant",
+    "named": true
+  },
+  {
+    "type": "keyword_granted",
+    "named": true
+  },
+  {
     "type": "keyword_group",
     "named": true
   },
@@ -14678,6 +16518,10 @@
   },
   {
     "type": "keyword_input",
+    "named": true
+  },
+  {
+    "type": "keyword_inputformat",
     "named": true
   },
   {
@@ -14782,6 +16626,10 @@
   },
   {
     "type": "keyword_main",
+    "named": true
+  },
+  {
+    "type": "keyword_maintain",
     "named": true
   },
   {
@@ -14953,6 +16801,10 @@
     "named": true
   },
   {
+    "type": "keyword_outputformat",
+    "named": true
+  },
+  {
     "type": "keyword_over",
     "named": true
   },
@@ -14993,11 +16845,19 @@
     "named": true
   },
   {
+    "type": "keyword_pivot",
+    "named": true
+  },
+  {
     "type": "keyword_plain",
     "named": true
   },
   {
     "type": "keyword_policy",
+    "named": true
+  },
+  {
+    "type": "keyword_pragma",
     "named": true
   },
   {
@@ -15017,6 +16877,10 @@
     "named": true
   },
   {
+    "type": "keyword_privileges",
+    "named": true
+  },
+  {
     "type": "keyword_procedure",
     "named": true
   },
@@ -15026,6 +16890,10 @@
   },
   {
     "type": "keyword_public",
+    "named": true
+  },
+  {
+    "type": "keyword_qualify",
     "named": true
   },
   {
@@ -15097,6 +16965,10 @@
     "named": true
   },
   {
+    "type": "keyword_respect",
+    "named": true
+  },
+  {
     "type": "keyword_restart",
     "named": true
   },
@@ -15122,6 +16994,10 @@
   },
   {
     "type": "keyword_returns",
+    "named": true
+  },
+  {
+    "type": "keyword_revoke",
     "named": true
   },
   {
@@ -15174,6 +17050,10 @@
   },
   {
     "type": "keyword_sequencefile",
+    "named": true
+  },
+  {
+    "type": "keyword_serde",
     "named": true
   },
   {
@@ -15389,6 +17269,10 @@
     "named": true
   },
   {
+    "type": "keyword_unpivot",
+    "named": true
+  },
+  {
     "type": "keyword_unsafe",
     "named": true
   },
@@ -15493,6 +17377,10 @@
     "named": true
   },
   {
+    "type": "keyword_within",
+    "named": true
+  },
+  {
     "type": "keyword_without",
     "named": true
   },
@@ -15516,6 +17404,10 @@
     "type": "marginalia",
     "named": true,
     "extra": true
+  },
+  {
+    "type": "meta_command",
+    "named": true
   },
   {
     "type": "op_other",
