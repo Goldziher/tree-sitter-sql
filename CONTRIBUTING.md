@@ -33,6 +33,10 @@ BREAKING CHANGE: The `predicate` node has been replaced with `binary_expression`
 
 ## Releases
 
+Add notable parser, query, binding, and build changes to the `Unreleased` section of [CHANGELOG.md](CHANGELOG.md)
+in the same pull request. Link to the upstream PR for ported changes. When cutting a release, move those entries
+under the new version and release date, then leave an empty `Unreleased` section for the next cycle.
+
 Pushing a version tag creates a [draft GitHub release](https://github.com/Goldziher/tree-sitter-sql/releases) with an archive
 of the generated parser sources and bindings. Update the version fields in the package manifests,
 `CMakeLists.txt`, and `Makefile` before tagging.
