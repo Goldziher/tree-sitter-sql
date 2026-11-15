@@ -1,7 +1,7 @@
 {
   "name": "@derekstride/tree-sitter-sql",
   "version": "0.3.13",
-  "description": "Tree-sitter Grammar for SQL",
+  "description": "Permissive SQL grammar for Tree-sitter",
   "main": "bindings/node",
   "types": "bindings/node",
   "scripts": {
@@ -38,12 +38,12 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DerekStride/tree-sitter-sql.git"
+    "url": "git+https://github.com/Goldziher/tree-sitter-sql.git"
   },
   "bugs": {
-    "url": "https://github.com/derekstride/tree-sitter-sql/issues"
+    "url": "https://github.com/Goldziher/tree-sitter-sql/issues"
   },
-  "homepage": "https://github.com/derekstride/tree-sitter-sql#readme",
+  "homepage": "https://github.com/Goldziher/tree-sitter-sql#readme",
   "commit-and-tag-version": {
     "skip": {
       "tag": true
@@ -51,7 +51,9 @@
   },
   "keywords": [
     "parser",
-    "sql"
+    "sql",
+    "tree-sitter",
+    "syntax-highlighting"
   ],
   "files": [
     "grammar.js",
