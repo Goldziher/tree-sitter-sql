@@ -251,3 +251,74 @@ TRUNCATE TABLE employees CASCADE;
     (object_reference
       (identifier))
     (keyword_cascade)))
+
+================================================================================
+Truncate with RESTART or CONTINUE IDENTITY
+================================================================================
+
+TRUNCATE TABLE t RESTART IDENTITY CASCADE;
+TRUNCATE t, u CONTINUE IDENTITY;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (keyword_truncate)
+    (keyword_table)
+    (object_reference
+      name: (identifier))
+    (keyword_restart)
+    (keyword_identity)
+    (keyword_cascade))
+  (statement
+    (keyword_truncate)
+    (object_reference
+      name: (identifier))
+    (object_reference
+      name: (identifier))
+    (keyword_continue)
+    (keyword_identity)))
+
+================================================================================
+Delete with an alias on the target
+================================================================================
+
+DELETE FROM t AS x WHERE x.id = 1;
+DELETE FROM t x RETURNING x.id;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (delete
+      (keyword_delete))
+    (from
+      (keyword_from)
+      (object_reference
+        name: (identifier))
+      (keyword_as)
+      alias: (identifier)
+      (where
+        (keyword_where)
+        predicate: (binary_expression
+          left: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier))
+          right: (literal)))))
+  (statement
+    (delete
+      (keyword_delete))
+    (from
+      (keyword_from)
+      (object_reference
+        name: (identifier))
+      alias: (identifier))
+    (returning
+      (keyword_returning)
+      (select_expression
+        (term
+          value: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier)))))))

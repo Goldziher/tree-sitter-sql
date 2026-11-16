@@ -11,12 +11,18 @@ This file records notable changes to the Goldziher fork, followed by the inherit
 * Support `POSITION(x IN y)`, bracket array literals, dot steps after colon paths, and `IGNORE` or `RESPECT NULLS` inside function calls.
 * Support `OR REPLACE` and `CLONE` in `CREATE DATABASE`, `CREATE SCHEMA`, and `CREATE TABLE`.
 * Support SQL Server `IDENTITY`, named `UNIQUE` and `FOREIGN KEY` constraints, and trailing commas in table definitions.
+* Support transaction statements on their own (`BEGIN`, `COMMIT`, `ROLLBACK`, `START TRANSACTION`, savepoints, `AND [NO] CHAIN`) and transaction modes in any order ([DerekStride/tree-sitter-sql#428](https://github.com/DerekStride/tree-sitter-sql/pull/428)).
+* Support `LIMIT ALL`, `OFFSET` without or before `LIMIT`, `OFFSET n ROWS`, `FETCH FIRST|NEXT n ROWS ONLY|WITH TIES` and `LIMIT offset, count` ([DerekStride/tree-sitter-sql#426](https://github.com/DerekStride/tree-sitter-sql/pull/426)).
+* Support an alias on the `DELETE` target ([DerekStride/tree-sitter-sql#424](https://github.com/DerekStride/tree-sitter-sql/pull/424)).
+* Support row locks (`FOR UPDATE|NO KEY UPDATE|SHARE|KEY SHARE [OF table, ...] [NOWAIT|SKIP LOCKED]`), `INSERT ... DEFAULT VALUES`, `TRUNCATE ... RESTART|CONTINUE IDENTITY` and `UPDATE ... ORDER BY ... LIMIT` ([DerekStride/tree-sitter-sql#429](https://github.com/DerekStride/tree-sitter-sql/pull/429)).
+* Support `GRANT` and `REVOKE` on sequences, functions, procedures, routines, databases and schemas ([DerekStride/tree-sitter-sql#430](https://github.com/DerekStride/tree-sitter-sql/pull/430)).
 
 ### Fixed
 
 * Accept lists in `SET`, conflict targets in `ON CONFLICT`, column lists in `UPDATE ... SET`, `DELETE ... USING`, and expressions after `LIMIT` and `OFFSET`.
 * Keep closing dollar-quote delimiters out of identifiers.
 * Generate parser headers before parallel C compilation and produce usable pkg-config metadata with the correct version.
+* Bind `::` tighter than the operators beside it, and read brackets after a cast as part of its type ([DerekStride/tree-sitter-sql#427](https://github.com/DerekStride/tree-sitter-sql/pull/427)).
 
 ### Changed
 

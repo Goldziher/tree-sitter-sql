@@ -68,6 +68,20 @@ export default {
         ),
       ),
       optional($.from),
+      repeat($.row_lock),
+  ),
+
+  // FOR UPDATE, FOR NO KEY UPDATE, FOR SHARE, FOR KEY SHARE [OF table, ...] [NOWAIT | SKIP LOCKED]
+  row_lock: $ => seq(
+    $.keyword_for,
+    choice(
+      $.keyword_update,
+      seq($.keyword_no, $.keyword_key, $.keyword_update),
+      $.keyword_share,
+      seq($.keyword_key, $.keyword_share),
+    ),
+    optional(seq($.keyword_of, comma_list($.object_reference, true))),
+    optional(choice($.keyword_nowait, seq($.keyword_skip, $.keyword_locked))),
   ),
 
   select: $ => seq(
@@ -285,7 +299,12 @@ export default {
     optional($.qualify),
     optional($.window_clause),
     optional($.order_by),
-    optional($.limit),
+    optional(
+      choice(
+        $.limit,
+        seq($.offset, optional(alias($._limit_after_offset, $.limit))),
+      ),
+    ),
   ),
 
   relation: $ => prec.right(
@@ -591,14 +610,42 @@ export default {
   ),
 
   limit: $ => seq(
-    $.keyword_limit,
-    $._expression,
+    choice(
+      seq(
+        $.keyword_limit,
+        choice(
+          // SQLite and MySQL: LIMIT 10, 5 skips 10 rows and returns 5
+          seq($._expression, optional(seq(',', $._expression))),
+          $.keyword_all,
+        ),
+      ),
+      $._fetch_first,
+    ),
     optional($.offset),
+  ),
+
+  // the LIMIT that follows an OFFSET takes no second OFFSET
+  _limit_after_offset: $ => choice(
+    seq(
+      $.keyword_limit,
+      choice($._expression, $.keyword_all),
+    ),
+    $._fetch_first,
+  ),
+
+  // SQL standard: FETCH { FIRST | NEXT } [ count ] { ROW | ROWS } { ONLY | WITH TIES }
+  _fetch_first: $ => seq(
+    $.keyword_fetch,
+    choice($.keyword_first, $.keyword_next),
+    optional($._expression),
+    choice($.keyword_row, $.keyword_rows),
+    choice($.keyword_only, seq($.keyword_with, $.keyword_ties)),
   ),
 
   offset: $ => seq(
     $.keyword_offset,
     $._expression,
+    optional(choice($.keyword_row, $.keyword_rows)),
   ),
 
   returning: $ => seq(

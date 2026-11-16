@@ -39,6 +39,11 @@ export default grammar({
     [$.values],
     [$._expression, $.window_function],
     [$.constraints],
+    [$.transaction, $._begin, $.block],
+    [$.transaction, $._begin],
+    // LIMIT ALL, or the ALL operator of `= ALL (...)`: a T-SQL block lets `(` open the next statement
+    [$.unary_expression, $.limit],
+    [$.unary_expression, $._limit_after_offset],
   ],
 
   precedences: $ => [
@@ -84,7 +89,10 @@ export default grammar({
       ),
       // optionally, a single statement without a terminating ;
       optional(
-        $.statement,
+        choice(
+          $.statement,
+          $.transaction,
+        ),
       ),
     ),
 
