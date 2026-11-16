@@ -17,6 +17,7 @@ This file records notable changes to the Goldziher fork, followed by the inherit
 * Accept lists in `SET`, conflict targets in `ON CONFLICT`, column lists in `UPDATE ... SET`, `DELETE ... USING`, and expressions after `LIMIT` and `OFFSET`.
 * Keep closing dollar-quote delimiters out of identifiers.
 * Generate parser headers before parallel C compilation and produce usable pkg-config metadata with the correct version.
+* Bind `::` tighter than the operators beside it, and read brackets after a cast as part of its type ([DerekStride/tree-sitter-sql#427](https://github.com/DerekStride/tree-sitter-sql/pull/427)).
 
 ### Changed
 
