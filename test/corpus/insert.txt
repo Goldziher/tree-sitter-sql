@@ -993,3 +993,36 @@ INSERT OR ROLLBACK INTO jobs (id, state) VALUES (1, 'new');
       (list
         (literal)
         (literal)))))
+
+================================================================================
+Insert default values
+================================================================================
+
+INSERT INTO t DEFAULT VALUES;
+INSERT INTO t DEFAULT VALUES RETURNING id;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (insert
+      (keyword_insert)
+      (keyword_into)
+      (object_reference
+        name: (identifier))
+      (keyword_default)
+      (keyword_values)))
+  (statement
+    (insert
+      (keyword_insert)
+      (keyword_into)
+      (object_reference
+        name: (identifier))
+      (keyword_default)
+      (keyword_values))
+    (returning
+      (keyword_returning)
+      (select_expression
+        (term
+          value: (field
+            name: (identifier)))))))
