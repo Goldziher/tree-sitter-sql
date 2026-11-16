@@ -11,6 +11,7 @@ This file records notable changes to the Goldziher fork, followed by the inherit
 * Support `POSITION(x IN y)`, bracket array literals, dot steps after colon paths, and `IGNORE` or `RESPECT NULLS` inside function calls.
 * Support `OR REPLACE` and `CLONE` in `CREATE DATABASE`, `CREATE SCHEMA`, and `CREATE TABLE`.
 * Support SQL Server `IDENTITY`, named `UNIQUE` and `FOREIGN KEY` constraints, and trailing commas in table definitions.
+* Support transaction statements on their own (`BEGIN`, `COMMIT`, `ROLLBACK`, `START TRANSACTION`, savepoints, `AND [NO] CHAIN`) and transaction modes in any order ([DerekStride/tree-sitter-sql#428](https://github.com/DerekStride/tree-sitter-sql/pull/428)).
 
 ### Fixed
 
