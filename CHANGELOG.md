@@ -12,6 +12,7 @@ This file records notable changes to the Goldziher fork, followed by the inherit
 * Support `OR REPLACE` and `CLONE` in `CREATE DATABASE`, `CREATE SCHEMA`, and `CREATE TABLE`.
 * Support SQL Server `IDENTITY`, named `UNIQUE` and `FOREIGN KEY` constraints, and trailing commas in table definitions.
 * Support transaction statements on their own (`BEGIN`, `COMMIT`, `ROLLBACK`, `START TRANSACTION`, savepoints, `AND [NO] CHAIN`) and transaction modes in any order ([DerekStride/tree-sitter-sql#428](https://github.com/DerekStride/tree-sitter-sql/pull/428)).
+* Support `LIMIT ALL`, `OFFSET` without or before `LIMIT`, `OFFSET n ROWS`, `FETCH FIRST|NEXT n ROWS ONLY|WITH TIES` and `LIMIT offset, count` ([DerekStride/tree-sitter-sql#426](https://github.com/DerekStride/tree-sitter-sql/pull/426)).
 
 ### Fixed
 
